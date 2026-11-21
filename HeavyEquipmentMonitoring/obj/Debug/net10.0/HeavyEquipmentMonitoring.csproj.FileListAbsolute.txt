@@ -204,7 +204,6 @@ C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\Hea
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\nezrqnk58p-{0}-muycvpuwrr-muycvpuwrr.gz
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\v0zgfp0y55-{0}-87fc7y1x7t-87fc7y1x7t.gz
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\yfc7ypekbg-{0}-mlv21k5csn-mlv21k5csn.gz
-C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\0l9iyax5rj-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\h671kwn33a-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\w3j8qezrd0-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\1yxysjpg1a-{0}-bqjiyaj88i-bqjiyaj88i.gz
@@ -279,3 +278,4 @@ C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\Hea
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\HeavyEquipmentMonitoring.pdb
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\HeavyEquipmentMonitoring.genruntimeconfig.cache
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\ref\HeavyEquipmentMonitoring.dll
+C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\0l9iyax5rj-{0}-lz50qowzxe-lz50qowzxe.gz

@@ -29,3 +29,245 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* ==================================
+   HEAVY EQUIPMENT DASHBOARD LAYOUT
+   ================================== */
+
+.dashboard-body {
+    margin: 0;
+    background: #0b1420;
+    color: #e9edf3;
+    font-family: Arial, sans-serif;
+}
+
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.dashboard-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    background: #101d2c;
+    border-right: 1px solid #28384b;
+    padding: 24px 12px;
+}
+
+.sidebar-brand {
+    text-align: center;
+    padding: 12px 8px 28px;
+    border-bottom: 1px solid #344357;
+}
+
+.brand-icon {
+    display: block;
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.sidebar-brand h2 {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    color: #d5dce5;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.sidebar-link:hover {
+    background: #26394f;
+    color: #ffffff;
+}
+
+.sidebar-link span {
+    width: 24px;
+    font-size: 20px;
+}
+
+/* MAIN CONTENT */
+
+.dashboard-content {
+    flex: 1;
+    min-width: 0;
+    background: #0b1420;
+}
+
+.dashboard-topbar {
+    min-height: 85px;
+    background: #111e2e;
+    border-bottom: 1px solid #344357;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 30px;
+}
+
+.topbar-title h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.dashboard-main {
+    padding: 30px;
+}
+
+/* LOGIN NAVIGATION */
+
+.topbar-account .nav-link {
+    color: #e9edf3 !important;
+}
+
+.topbar-account .nav-link:hover {
+    color: #ffc43d !important;
+}
+
+/* TABLES */
+
+.dashboard-main .table {
+    color: #e9edf3;
+    border-color: #344357;
+}
+
+.dashboard-main .table > :not(caption) > * > * {
+    background: #172536;
+    color: #e9edf3;
+    border-color: #344357;
+}
+
+.dashboard-main .table-striped > tbody > tr:nth-of-type(odd) > * {
+    background: #1c2d40;
+    color: #e9edf3;
+}
+
+/* RESPONSIVE LAYOUT */
+
+@media (max-width: 768px) {
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .dashboard-sidebar {
+        width: 100%;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dashboard-main {
+        padding: 16px;
+    }
+  }
+
+
+/* HEAVY EQUIPMENT DASHBOARD THEME */
+
+.dashboard-body {
+    background: #0d1521;
+    color: #e8edf4;
+}
+
+.dashboard-sidebar {
+    background: #101925;
+    border-right: 1px solid #2b3544;
+    padding: 20px 10px;
+}
+
+.sidebar-brand {
+    text-align: center;
+    padding: 10px 8px 28px;
+    border-bottom: 1px solid #c99624;
+}
+
+.sidebar-logo {
+    display: block;
+    width: 100px;
+    height: 75px;
+    object-fit: contain;
+    margin: 0 auto 12px;
+}
+
+.sidebar-brand h2 {
+    color: #ffffff;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.sidebar-nav {
+    margin-top: 24px;
+    gap: 8px;
+}
+
+.sidebar-link {
+    color: #d5dce5;
+    border-left: 4px solid transparent;
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.sidebar-link:hover {
+    background: #29384a;
+    color: #ffffff;
+}
+
+.sidebar-link.active {
+    background: linear-gradient(90deg, #77501b, #493821);
+    border-left-color: #ffbf27;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.dashboard-content {
+    background: #0d1521;
+}
+
+.dashboard-topbar {
+    background: #111a27;
+    border-bottom: 1px solid #394555;
+}
+
+.dashboard-main {
+    background: #0d1521;
+}
+
+/* DASHBOARD TABLES */
+
+.dashboard-main .table > :not(caption) > * > * {
+    background: #172333;
+    color: #e8edf4;
+    border-color: #344154;
+}
+
+.dashboard-main .table-striped > tbody > tr:nth-of-type(odd) > * {
+    background: #1b2a3b;
+}

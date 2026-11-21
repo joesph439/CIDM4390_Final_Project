@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HeavyEquipmentMonitoring")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+257433fe9fdbea0bebb4db7b5a2aecc36a94841a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ae1cb2df4f372906d23e7baf3417926d1498e6d")]
 [assembly: System.Reflection.AssemblyProductAttribute("HeavyEquipmentMonitoring")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HeavyEquipmentMonitoring")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
