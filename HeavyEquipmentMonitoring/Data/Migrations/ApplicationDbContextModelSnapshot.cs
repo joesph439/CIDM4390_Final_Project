@@ -155,7 +155,7 @@ namespace HeavyEquipmentMonitoring.Data.Migrations
                     b.Property<double?>("EndEngineHour")
                         .HasColumnType("REAL");
 
-                    b.Property<DateTime?>("EndeTime")
+                    b.Property<DateTime?>("EndTime")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("EquipmentID")

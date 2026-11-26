@@ -1,0 +1,158 @@
+@page
+@model HeavyEquipmentMonitoring.Pages.Equipment.ArchiveModel
+
+@{
+    ViewData["Title"] = "Equipment Archive";
+
+    var totalArchived = Model.ArchivedEquipment.Count();
+
+    var soldEquipment = Model.ArchivedEquipment.Count(e => e.IsSold);
+
+    var outOfService = Model.ArchivedEquipment.Count(e => e.IsOutOfService && !e.IsSold);
+}
+
+<div class="equipment-dashboard">
+
+    <div class="page-description">
+        <p>View equipment removed from active fleet operations.</p>
+    </div>
+
+    <div class="summary-grid standby-grid">
+
+        <div class="summary-card total-card">
+            <div class="summary-label">Total Archived</div>
+            <div class="summary-value">@totalArchived</div>
+        </div>
+
+        <div class="summary-card off-card">
+            <div class="summary-label">Sold Equipment</div>
+            <div class="summary-value">@soldEquipment</div>
+        </div>
+
+        <div class="summary-card outofservice-card">
+            <div class="summary-label">Out of Service</div>
+            <div class="summary-value">@outOfService</div>
+        </div>
+
+    </div>
+
+    <section class="dashboard-panel">
+
+        <div class="panel-header">
+
+            <h2>Archived Equipment</h2>
+
+            <a asp-page="./Index" class="btn-cancel">
+                Back to Inventory
+            </a>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table equipment-table">
+
+                <thead>
+                    <tr>
+                        <th>Equipment #</th>
+                        <th>Equipment Type</th>
+                        <th>Model</th>
+                        <th>Total Engine Hours</th>
+                        <th>Archive Status</th>
+                        <th>Ownership</th>
+                        <th>Archived Date</th>
+                        <th>Reason</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var equipment in Model.ArchivedEquipment)
+                    {
+                        <tr>
+                            <td>@equipment.EquipmentNumber</td>
+
+                            <td>@equipment.EquipmentType</td>
+
+                            <td>@equipment.EquipmentModel</td>
+
+                            <td>
+                                @equipment.TotalEngineHours.ToString("N1") h
+                            </td>
+
+                            <td>
+                                @if (equipment.IsSold)
+                                {
+                                    <span class="equipment-status status-sold">
+                                        Sold
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="equipment-status status-outofservice">
+                                        Out of Service
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+                                @(equipment.IsSold ? "Formerly Owned" : "Company Owned")
+                            </td>
+
+                            <td>
+                                @((equipment.IsSold ? equipment.SoldDate : equipment.OutOfServiceDate) ?.ToString("MM/dd/yyyy") ?? "—")
+                            </td>
+
+                            <td class="archive-reason">
+                                @(equipment.ArchiveReason ?? "—")
+                            </td>
+
+                            <td>
+                                @if (equipment.IsOutOfService && !equipment.IsSold)
+                                {
+                                    <div class="equipment-actions">
+
+                                        <a asp-page="./Restore"
+                                            asp-route-id="@equipment.EquipmentID"
+                                            class="btn-restore">
+                                            Restore
+                                            </a>
+
+                                        <a asp-page="./Delete"
+                                           asp-route-id="@equipment.EquipmentID"
+                                           class="btn-archive">
+                                            Mark as Sold
+                                        </a>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="archived-no-action">
+                                        No Actions
+                                    </span>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+
+                    @if (!Model.ArchivedEquipment.Any())
+                    {
+                        <tr>
+                            <td colspan="9" class="empty-table">
+                                No equipment has been archived.
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</div>

@@ -16,7 +16,7 @@ public class CreateModel : PageModel
     }
 
     [BindProperty]
-    public HeavyEquipmentMonitoring.Models.Equipment Equipment { get; set; } = new();
+    public HeavyEquipmentMonitoring.Models.Equipment Equipment {get; set;} = new();
 
     public void OnGet()
     {

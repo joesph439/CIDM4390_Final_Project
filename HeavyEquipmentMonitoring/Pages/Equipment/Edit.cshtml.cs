@@ -16,7 +16,7 @@ public class EditModel : PageModel
     }
 
     [BindProperty]
-    public HeavyEquipmentMonitoring.Models.Equipment Equipment { get; set; } = new();
+    public HeavyEquipmentMonitoring.Models.Equipment Equipment {get; set;} = new();
 
     public async Task<IActionResult> OnGetAsync(int id)
     {

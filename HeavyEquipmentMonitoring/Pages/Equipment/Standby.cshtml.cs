@@ -14,8 +14,7 @@ public class StandbyModel : PageModel
         _context = context;
     }
 
-    public List<HeavyEquipmentMonitoring.Models.Equipment> 
-        StandbyEquipment { get; set; } = new();
+    public List<HeavyEquipmentMonitoring.Models.Equipment> StandbyEquipment {get; set;} = new();
 
     public async Task OnGetAsync()
     {

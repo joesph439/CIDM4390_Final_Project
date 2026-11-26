@@ -495,3 +495,330 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* ==================================
+   EQUIPMENT ARCHIVE FORM
+   ================================== */
+
+.archive-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid #34404f;
+}
+
+.archive-warning {
+    background: rgba(255, 194, 41, 0.06);
+    border: 1px solid #665326;
+    border-left: 4px solid #ffc229;
+    border-radius: 6px;
+    padding: 18px;
+    color: #d5dce5;
+}
+
+.archive-warning strong {
+    color: #ffc229;
+}
+
+.archive-warning p {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+/* ARCHIVE CONFIRMATION BUTTON */
+
+.btn-danger-custom {
+    display: inline-block;
+    background: #b83d3d;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-danger-custom:hover {
+    background: #963030;
+    color: #ffffff;
+}
+
+/* INVENTORY ARCHIVE BUTTON */
+
+.btn-archive {
+    display: inline-block;
+    background: rgba(224, 92, 92, 0.08);
+    color: #e05c5c;
+    border: 1px solid #e05c5c;
+    border-radius: 5px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.btn-archive:hover {
+    background: #e05c5c;
+    color: #ffffff;
+}
+
+.equipment-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* ARCHIVE STATUS BADGES */
+
+.equipment-status {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.equipment-status.status-sold {
+    background-color: rgba(120, 131, 145, 0.15);
+    color: #b9c3cf;
+    border: 1px solid #788391;
+}
+
+.equipment-status.status-outofservice {
+    background-color: rgba(224, 92, 92, 0.12);
+    color: #e05c5c;
+    border: 1px solid #e05c5c;
+}
+
+
+/* ==================================
+   EQUIPMENT RESTORE
+   ================================== */
+
+.btn-restore {
+    display: inline-block;
+    background: rgba(50, 182, 90, 0.08);
+    color: #32b65a;
+    border: 1px solid #32b65a;
+    border-radius: 5px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.btn-restore:hover {
+    background: #32b65a;
+    color: #ffffff;
+}
+
+.btn-restore-confirm {
+    display: inline-block;
+    background: #278a45;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-restore-confirm:hover {
+    background: #206f38;
+}
+
+.restore-notice {
+    background: rgba(50, 182, 90, 0.06);
+    border: 1px solid #285b3b;
+    border-left: 4px solid #32b65a;
+    border-radius: 6px;
+    padding: 18px;
+    color: #d5dce5;
+}
+
+.restore-notice strong {
+    color: #32b65a;
+}
+
+.restore-notice p {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+
+/* ==================================
+   EQUIPMENT SEARCH AND FILTERS
+   ================================== */
+
+.equipment-search-panel {
+    margin-bottom: 24px;
+}
+
+.equipment-search-form {
+    padding: 24px;
+}
+
+.search-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 20px;
+    align-items: end;
+}
+
+.search-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.search-result-info {
+    padding: 12px 20px;
+    color: #aab4c2;
+    font-size: 13px;
+    border-bottom: 1px solid #34404f;
+}
+
+/* STANDBY STATUS */
+
+.equipment-status.status-standby {
+    background: rgba(255, 194, 41, 0.10);
+    color: #ffc229;
+    border: 1px solid #ffc229;
+}
+
+/* CREW BADGES */
+
+.crew-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    background: #34404f;
+    color: #ffffff;
+}
+
+.crew-dirt {
+    background: #503a2c;
+    color: #ffffff;
+    border: 1px solid #79583f;
+}
+
+.crew-asph,
+.crew-ashp {
+    background: #b8bec5;
+    color: #101925;
+    border: 1px solid #d5dce5;
+}
+
+.crew-conc {
+    background: #365a60;
+    color: #ffffff;
+    border: 1px solid #52838b;
+}
+
+.unassigned-crew {
+    color: #788391;
+}
+
+/* RESPONSIVE SEARCH LAYOUT */
+
+@media (max-width: 1200px) {
+    .search-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .search-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-actions {
+        flex-wrap: wrap;
+    }
+}
+
+
+/* ==================================
+   EQUIPMENT ANALYTICS CHARTS
+   ================================== */
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.analytics-panel {
+    min-width: 0;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.analytics-panel .panel-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 290px;
+    padding: 20px;
+    flex-grow: 1;
+    min-height: 290px;
+}
+
+.chart-description {
+    padding: 12px 20px 0;
+    font-size: 12px;
+    color: #aab4c2;
+}
+
+.analytics-panel canvas {
+    max-width: 100%;
+}
+
+/* RESPONSIVE ANALYTICS */
+
+@media (max-width: 1400px) {
+
+    .analytics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .analytics-panel:first-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analytics-panel:first-child {
+        grid-column: auto;
+    }
+
+    .chart-container {
+        height: 260px;
+        min-height: 260px;
+    }
+}

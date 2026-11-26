@@ -1,0 +1,123 @@
+@page "{id:int}"
+@model HeavyEquipmentMonitoring.Pages.Equipment.RestoreModel
+
+@{
+    ViewData["Title"] = "Restore Equipment";
+}
+
+<div class="dashboard-panel equipment-form">
+
+    <div class="panel-header">
+        <h2>Restore Equipment #@Model.Equipment.EquipmentNumber</h2>
+    </div>
+
+    <div class="form-content">
+
+        <p class="form-description">
+            Restore this equipment to active fleet inventory
+            and make it available for project assignment.
+        </p>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Equipment Number</label>
+                <input class="form-control"
+                       value="@Model.Equipment.EquipmentNumber"
+                       readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Equipment Type</label>
+                <input class="form-control"
+                       value="@Model.Equipment.EquipmentType"
+                       readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Equipment Model</label>
+                <input class="form-control"
+                       value="@Model.Equipment.EquipmentModel"
+                       readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Total Engine Hours</label>
+                <input class="form-control"
+                       value="@Model.Equipment.TotalEngineHours.ToString("N1")"
+                       readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Current Status</label>
+                <input class="form-control"
+                       value="Out of Service"
+                       readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Status After Restoration</label>
+                <input class="form-control"
+                       value="Standby"
+                       readonly />
+            </div>
+
+        </div>
+
+        <div class="archive-section">
+
+            <div class="form-group">
+                <label>Original Archive Reason</label>
+
+                <textarea class="form-control"
+                          rows="3"
+                          readonly>@Model.Equipment.ArchiveReason</textarea>
+            </div>
+
+            <div class="restore-notice">
+
+                <strong>Equipment Restoration</strong>
+
+                <p>
+                    This equipment will return to the active
+                    inventory and Standby Equipment list.
+                </p>
+
+                <p>
+                    Existing engine hours, maintenance records,
+                    inspections, and project records will be preserved.
+                </p>
+
+                <p>
+                    Confirm that all necessary repairs have been
+                    completed and the equipment is safe to return
+                    to service before continuing.
+                </p>
+
+            </div>
+
+        </div>
+
+        <form method="post"
+              asp-route-id="@Model.Equipment.EquipmentID">
+
+            <div asp-validation-summary="All"
+                 class="text-danger"></div>
+
+            <div class="form-actions">
+
+                <button type="submit" class="btn-restore-confirm">
+                    Restore Equipment
+                </button>
+
+                <a asp-page="./Archive" class="btn-cancel">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

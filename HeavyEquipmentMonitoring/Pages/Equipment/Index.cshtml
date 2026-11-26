@@ -5,14 +5,10 @@
 @{
     ViewData["Title"] = "Equipment";
 
-    var totalEquipment = Model.EquipmentList.Count();
-
+    var totalEquipment = Model.TotalFleet;
     var runningEquipment = Model.EquipmentList.Count(e => e.EngineStatus == "Running");
-
     var idleEquipment = Model.EquipmentList.Count(e => e.EngineStatus == "Idle");
-
     var maintenanceEquipment = Model.EquipmentList.Count(e => e.EngineStatus == "Maintenance");
-
     var offEquipment = Model.EquipmentList.Count(e => e.EngineStatus == "Off");
 }
 
@@ -22,33 +18,200 @@
         <p>Manage and monitor equipment, engine hours, inspections, and fleet status.</p>
     </div>
 
-    <!-- SUMMARY CARDS -->
-
     <div class="summary-grid">
 
         <div class="summary-card total-card">
-            <div class="summary-label">Total Equipment</div>
+            <div class="summary-label">Total Fleet</div>
             <div class="summary-value">@totalEquipment</div>
         </div>
 
         <div class="summary-card running-card">
-            <div class="summary-label">Running</div>
+            <div class="summary-label">Running (Matching)</div>
             <div class="summary-value">@runningEquipment</div>
         </div>
 
         <div class="summary-card idle-card">
-            <div class="summary-label">Idle</div>
+            <div class="summary-label">Idle (Matching)</div>
             <div class="summary-value">@idleEquipment</div>
         </div>
 
         <div class="summary-card maintenance-card">
-            <div class="summary-label">Maintenance</div>
+            <div class="summary-label">Maintenance (Matching)</div>
             <div class="summary-value">@maintenanceEquipment</div>
         </div>
 
         <div class="summary-card off-card">
-            <div class="summary-label">Off</div>
+            <div class="summary-label">Off (Matching)</div>
             <div class="summary-value">@offEquipment</div>
+        </div>
+
+    </div>
+
+
+    <!-- EQUIPMENT ANALYTICS -->
+
+        <div class="analytics-grid">
+
+            <section class="dashboard-panel analytics-panel">
+
+                <div class="panel-header">
+                    <h2>Top 5 Equipment by Engine Hours</h2>
+                </div>
+
+                <div class="chart-description">
+                    Lifetime engine hours
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="topEquipmentChart"></canvas>
+                </div>
+
+            </section>
+
+            <section class="dashboard-panel analytics-panel">
+
+                <div class="panel-header">
+                    <h2>Equipment by Type</h2>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="equipmentTypeChart"></canvas>
+                </div>
+
+            </section>
+
+            <section class="dashboard-panel analytics-panel">
+
+                <div class="panel-header">
+                    <h2>Engine Status Distribution</h2>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="engineStatusChart"></canvas>
+                </div>
+
+            </section>
+
+        </div>
+
+
+    <!-- EQUIPMENT SEARCH -->
+
+    <section class="dashboard-panel equipment-search-panel">
+
+        <div class="panel-header">
+            <h2>Search Equipment</h2>
+        </div>
+
+        <form method="get" class="equipment-search-form">
+
+            <div class="search-grid">
+
+                <div class="form-group search-input-group">
+
+                    <label asp-for="SearchString">
+                        Search Equipment
+                    </label>
+
+                    <input asp-for="SearchString"
+                           class="form-control"
+                           placeholder="Equipment number, type, model, project or crew..." />
+
+                </div>
+
+                <div class="form-group">
+
+                    <label asp-for="AssignmentFilter">
+                        Assignment
+                    </label>
+
+                    <select asp-for="AssignmentFilter"
+                            class="form-select">
+
+                        <option value="All">All Assignments</option>
+                        <option value="Assigned">Assigned</option>
+                        <option value="Standby">Standby</option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label asp-for="ProjectFilter">
+                        Project
+                    </label>
+
+                    <select asp-for="ProjectFilter"
+                            class="form-select">
+
+                        <option value="">All Projects</option>
+
+                        @foreach (var project in Model.ProjectList)
+                        {
+                            <option value="@project.ProjectID">
+                                @project.ProjectName
+                            </option>
+                        }
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label asp-for="StatusFilter">
+                        Engine Status
+                    </label>
+
+                    <select asp-for="StatusFilter"
+                            class="form-select">
+
+                        <option value="All">All Statuses</option>
+                        <option value="Running">Running</option>
+                        <option value="Idle">Idle</option>
+                        <option value="Maintenance">Maintenance</option>
+                        <option value="Off">Off</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="search-actions">
+
+                <button type="submit" class="btn-gold">
+                    Search
+                </button>
+
+                <a asp-page="./Index" class="btn-cancel">
+                    Clear Filters
+                </a>
+
+            </div>
+
+        </form>
+
+    </section>
+
+    <!-- SEARCH RESULT COUNTS -->
+
+    <div class="summary-grid standby-grid">
+
+        <div class="summary-card total-card">
+            <div class="summary-label">Matching Equipment</div>
+            <div class="summary-value">@Model.MatchingEquipment</div>
+        </div>
+
+        <div class="summary-card maintenance-card">
+            <div class="summary-label">Assigned to Projects</div>
+            <div class="summary-value">@Model.AssignedEquipment</div>
+        </div>
+
+        <div class="summary-card running-card">
+            <div class="summary-label">On Standby</div>
+            <div class="summary-value">@Model.StandbyEquipment</div>
         </div>
 
     </div>
@@ -67,12 +230,20 @@
                     Standby Equipment
                 </a>
 
+                <a asp-page="./Archive" class="btn-cancel">
+                    Archive
+                </a>
+
                 <a asp-page="./Create" class="btn-gold">
                     Add Equipment
                 </a>
 
             </div>
 
+        </div>
+
+        <div class="search-result-info">
+            Showing @Model.MatchingEquipment of @Model.TotalFleet equipment records
         </div>
 
         <div class="table-responsive">
@@ -84,6 +255,8 @@
                         <th>Equipment #</th>
                         <th>Equipment Type</th>
                         <th>Model</th>
+                        <th>Project</th>
+                        <th>Crew</th>
                         <th>Total Engine Hours</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -94,12 +267,43 @@
 
                     @foreach (var equipment in Model.EquipmentList)
                     {
+                        var isAssigned = Model.EquipmentProjects.TryGetValue(equipment.EquipmentID, out var projectName);
+
+                        var crew = Model.EquipmentCrews.GetValueOrDefault(equipment.EquipmentID, "");
+
                         <tr>
+
                             <td>@equipment.EquipmentNumber</td>
 
                             <td>@equipment.EquipmentType</td>
 
                             <td>@equipment.EquipmentModel</td>
+
+                            <td>
+                                @if (isAssigned)
+                                {
+                                    @projectName
+                                }
+                                else
+                                {
+                                    <span class="equipment-status status-standby">
+                                        Standby
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(crew))
+                                {
+                                    <span class="crew-badge crew-@(crew.ToLowerInvariant())">
+                                        @crew
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="unassigned-crew">—</span>
+                                }
+                            </td>
 
                             <td>
                                 @equipment.TotalEngineHours.ToString("N1") h
@@ -110,19 +314,33 @@
                                     @equipment.EngineStatus
                                 </span>
                             </td>
+
                             <td>
-                                <a asp-page="./Edit" asp-route-id="@equipment.EquipmentID" class="btn-edit">
-                                    Edit
-                                </a>
+                                <div class="equipment-actions">
+
+                                    <a asp-page="./Edit"
+                                       asp-route-id="@equipment.EquipmentID"
+                                       class="btn-edit">
+                                        Edit
+                                    </a>
+
+                                    <a asp-page="./Delete"
+                                       asp-route-id="@equipment.EquipmentID"
+                                       class="btn-archive">
+                                        Archive
+                                    </a>
+
+                                </div>
                             </td>
+
                         </tr>
                     }
 
                     @if (!Model.EquipmentList.Any())
                     {
                         <tr>
-                            <td colspan="6" class="empty-table">
-                                No equipment has been added to the inventory yet.
+                            <td colspan="8" class="empty-table">
+                                No equipment matches your search criteria.
                             </td>
                         </tr>
                     }
@@ -137,3 +355,174 @@
 
 </div>
 
+
+@section Scripts {
+
+    <script>
+
+        Chart.defaults.color = "#aab4c2";
+        Chart.defaults.borderColor = "#34404f";
+        Chart.defaults.font.family = "Arial, sans-serif";
+
+
+        // CHART 1: TOP 5 EQUIPMENT
+
+        new Chart(document.getElementById("topEquipmentChart"), {
+
+            type: "bar",
+
+            data: {
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TopEquipmentLabels)),
+
+                datasets: [{
+                    label: "Engine Hours",
+
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TopEquipmentHours)),
+
+                    backgroundColor: "#ffc229",
+                    borderRadius: 5,
+                    maxBarThickness: 28
+                }]
+            },
+
+            options: {
+                indexAxis: "y",
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.x.toLocaleString() + " hours";
+                            }
+                        }
+                    }
+                },
+
+                scales: {
+                    x: {
+                        beginAtZero: true,
+
+                        grid: {
+                            color: "#293544"
+                        },
+
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    },
+
+                    y: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // CHART 2: EQUIPMENT BY TYPE
+
+        new Chart(document.getElementById("equipmentTypeChart"), {
+
+            type: "doughnut",
+
+            data: {
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.EquipmentTypeLabels)),
+
+                datasets: [{
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.EquipmentTypeCounts)),
+
+                    backgroundColor: [
+                        "#ffc229",
+                        "#4199e1",
+                        "#32b65a",
+                        "#b8bec5",
+                        "#79583f",
+                        "#9b72cf",
+                        "#e07845",
+                        "#365a60",
+                        "#d65c5c",
+                        "#788391",
+                        "#56b9c4",
+                        "#d4a373"
+                    ],
+
+                    borderColor: "#151e29",
+                    borderWidth: 3,
+                    hoverOffset: 6
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "65%",
+
+                plugins: {
+                    legend: {
+                        position: "bottom",
+
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            boxWidth: 10
+                        }
+                    }
+                }
+            }
+        });
+
+        // CHART 3: ENGINE STATUS
+
+        new Chart(document.getElementById("engineStatusChart"), {
+
+            type: "doughnut",
+
+            data: {
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.EngineStatusLabels)),
+
+                datasets: [{
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.EngineStatusCounts)),
+
+                    backgroundColor: [
+                        "#32b65a",
+                        "#e6a323",
+                        "#4199e1",
+                        "#788391"
+                    ],
+
+                    borderColor: "#151e29",
+                    borderWidth: 3,
+                    hoverOffset: 6
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "65%",
+
+                plugins: {
+                    legend: {
+                        position: "bottom",
+
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            boxWidth: 10
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
+}

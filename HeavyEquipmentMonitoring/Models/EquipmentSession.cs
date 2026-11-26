@@ -6,7 +6,7 @@ public class EquipmentSession
     public int OperatorID {get; set;}
     public int EquipmentID {get; set;}
     public DateTime StartTime {get; set;}
-    public DateTime? EndeTime {get; set;}
+    public DateTime? EndTime {get; set;}
     public double StartEngineHour {get; set;}
     public double? EndEngineHour {get; set;}
 }
