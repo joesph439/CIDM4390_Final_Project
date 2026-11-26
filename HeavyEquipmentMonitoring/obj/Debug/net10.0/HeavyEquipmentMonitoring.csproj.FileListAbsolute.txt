@@ -265,8 +265,6 @@ C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\Hea
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\z3gt5m7zxl-{0}-muycvpuwrr-muycvpuwrr.gz
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\0qcqtiz3e8-{0}-87fc7y1x7t-87fc7y1x7t.gz
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\mqz4vvxho3-{0}-mlv21k5csn-mlv21k5csn.gz
-C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\t7fqkvupxq-{0}-clwf1rz9bn-clwf1rz9bn.gz
-C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\bj021fa2ff-{0}-clwf1rz9bn-clwf1rz9bn.gz
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\staticwebassets.development.json
@@ -278,4 +276,6 @@ C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\Hea
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\HeavyEquipmentMonitoring.pdb
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\HeavyEquipmentMonitoring.genruntimeconfig.cache
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\ref\HeavyEquipmentMonitoring.dll
-C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\0l9iyax5rj-{0}-lz50qowzxe-lz50qowzxe.gz
+C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\t7fqkvupxq-{0}-au77yzyi7o-au77yzyi7o.gz
+C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\bj021fa2ff-{0}-au77yzyi7o-au77yzyi7o.gz
+C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\0l9iyax5rj-{0}-3d3qj89tga-3d3qj89tga.gz

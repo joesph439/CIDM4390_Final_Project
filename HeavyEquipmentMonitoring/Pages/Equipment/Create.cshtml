@@ -1,0 +1,132 @@
+
+@page
+@model HeavyEquipmentMonitoring.Pages.Equipment.CreateModel
+
+@{
+    ViewData["Title"] = "Add Equipment";
+}
+
+<div class="dashboard-panel equipment-form">
+
+    <div class="panel-header">
+        <h2>Add New Equipment</h2>
+    </div>
+
+    <div class="form-content">
+
+        <p class="form-description">
+            Enter the equipment information to add a new
+            machine to the fleet inventory.
+        </p>
+
+        <form method="post">
+
+            <div asp-validation-summary="All"
+                 class="text-danger"></div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label asp-for="Equipment.EquipmentNumber">
+                        Equipment Number
+                    </label>
+
+                    <input asp-for="Equipment.EquipmentNumber"
+                           class="form-control"
+                           placeholder="Enter equipment number"
+                           required />
+
+                    <span asp-validation-for="Equipment.EquipmentNumber"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Equipment.EquipmentType">
+                        Equipment Type
+                    </label>
+
+                    <select asp-for="Equipment.EquipmentType"
+                            class="form-select" required>
+
+                        <option value="">Select Equipment Type</option>
+                        <option>Bulldozer</option>
+                        <option>Excavator</option>
+                        <option>Motor Grader</option>
+                        <option>Wheel Loader</option>
+                        <option>Backhoe</option>
+                        <option>Skid Steer</option>
+                        <option>Roller</option>
+                        <option>Paver</option>
+                        <option>Water Truck</option>
+                        <option>Dump Truck</option>
+                        <option>Scraper</option>
+                        <option>Other</option>
+
+                    </select>
+
+                    <span asp-validation-for="Equipment.EquipmentType"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Equipment.EquipmentModel">
+                        Equipment Model
+                    </label>
+
+                    <input asp-for="Equipment.EquipmentModel"
+                           class="form-control"
+                           placeholder="Example: CAT D6"
+                           required />
+
+                    <span asp-validation-for="Equipment.EquipmentModel"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Equipment.TotalEngineHours">
+                        Current Engine Hours
+                    </label>
+
+                    <input asp-for="Equipment.TotalEngineHours"
+                           type="number"
+                           min="0"
+                           step="0.1"
+                           class="form-control"
+                           required />
+
+                    <span asp-validation-for="Equipment.TotalEngineHours"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Engine Status</label>
+
+                    <input type="text"
+                           value="Off"
+                           class="form-control"
+                           readonly />
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button type="submit" class="btn-gold">
+                    Save Equipment
+                </button>
+
+                <a asp-page="./Index" class="btn-cancel">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

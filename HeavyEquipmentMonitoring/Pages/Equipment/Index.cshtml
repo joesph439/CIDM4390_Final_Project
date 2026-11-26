@@ -3,40 +3,137 @@
 @model HeavyEquipmentMonitoring.Pages.Equipment.IndexModel
 
 @{
-    ViewData["Title"] = "Equipment Inventory";
+    ViewData["Title"] = "Equipment";
+
+    var totalEquipment = Model.EquipmentList.Count();
+
+    var runningEquipment = Model.EquipmentList.Count(e => e.EngineStatus == "Running");
+
+    var idleEquipment = Model.EquipmentList.Count(e => e.EngineStatus == "Idle");
+
+    var maintenanceEquipment = Model.EquipmentList.Count(e => e.EngineStatus == "Maintenance");
+
+    var offEquipment = Model.EquipmentList.Count(e => e.EngineStatus == "Off");
 }
 
-<h1>Equipment Inventory</h1>
+<div class="equipment-dashboard">
 
-<p>View and monitor all equipment in the system.</p>
-
-<table class="table table-striped table-bordered">
-    <thead class="table-dark">
-        <tr>
-            <th>Equipment Number</th>
-            <th>Equipment Type</th>
-            <th>Equipment Model</th>
-            <th>Total Engine Hours</th>
-            <th>Engine Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var equipment in Model.EquipmentList)
-        {
-            <tr>
-                <td>@equipment.EquipmentNumber</td>
-                <td>@equipment.EquipmentType</td>
-                <td>@equipment.EquipmentModel</td>
-                <td>@equipment.TotalEngineHours</td>
-                <td>@equipment.EngineStatus</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@if (!Model.EquipmentList.Any())
-{
-    <div class="alert alert-info">
-        No equipment has been added to the inventory yet.
+    <div class="page-description">
+        <p>Manage and monitor equipment, engine hours, inspections, and fleet status.</p>
     </div>
-}
+
+    <!-- SUMMARY CARDS -->
+
+    <div class="summary-grid">
+
+        <div class="summary-card total-card">
+            <div class="summary-label">Total Equipment</div>
+            <div class="summary-value">@totalEquipment</div>
+        </div>
+
+        <div class="summary-card running-card">
+            <div class="summary-label">Running</div>
+            <div class="summary-value">@runningEquipment</div>
+        </div>
+
+        <div class="summary-card idle-card">
+            <div class="summary-label">Idle</div>
+            <div class="summary-value">@idleEquipment</div>
+        </div>
+
+        <div class="summary-card maintenance-card">
+            <div class="summary-label">Maintenance</div>
+            <div class="summary-value">@maintenanceEquipment</div>
+        </div>
+
+        <div class="summary-card off-card">
+            <div class="summary-label">Off</div>
+            <div class="summary-value">@offEquipment</div>
+        </div>
+
+    </div>
+
+    <!-- EQUIPMENT INVENTORY -->
+
+    <section class="dashboard-panel">
+
+        <div class="panel-header">
+
+            <h2>Equipment Inventory</h2>
+
+            <div class="panel-actions">
+
+                <a asp-page="./Standby" class="btn-cancel">
+                    Standby Equipment
+                </a>
+
+                <a asp-page="./Create" class="btn-gold">
+                    Add Equipment
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table equipment-table">
+
+                <thead>
+                    <tr>
+                        <th>Equipment #</th>
+                        <th>Equipment Type</th>
+                        <th>Model</th>
+                        <th>Total Engine Hours</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var equipment in Model.EquipmentList)
+                    {
+                        <tr>
+                            <td>@equipment.EquipmentNumber</td>
+
+                            <td>@equipment.EquipmentType</td>
+
+                            <td>@equipment.EquipmentModel</td>
+
+                            <td>
+                                @equipment.TotalEngineHours.ToString("N1") h
+                            </td>
+
+                            <td>
+                                <span class="equipment-status status-@(equipment.EngineStatus.ToLower())">
+                                    @equipment.EngineStatus
+                                </span>
+                            </td>
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@equipment.EquipmentID" class="btn-edit">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                    @if (!Model.EquipmentList.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="empty-table">
+                                No equipment has been added to the inventory yet.
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</div>
+

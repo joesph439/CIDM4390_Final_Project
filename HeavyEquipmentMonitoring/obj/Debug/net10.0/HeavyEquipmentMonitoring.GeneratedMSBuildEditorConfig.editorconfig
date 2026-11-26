@@ -34,8 +34,28 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Joseph Barrientez/OneDrive/Desktop/Fall 2026/CIDM4390_Final_Project/HeavyEquipmentMonitoring/Pages/Equipment/Archive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50XEFyY2hpdmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph Barrientez/OneDrive/Desktop/Fall 2026/CIDM4390_Final_Project/HeavyEquipmentMonitoring/Pages/Equipment/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph Barrientez/OneDrive/Desktop/Fall 2026/CIDM4390_Final_Project/HeavyEquipmentMonitoring/Pages/Equipment/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50XERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph Barrientez/OneDrive/Desktop/Fall 2026/CIDM4390_Final_Project/HeavyEquipmentMonitoring/Pages/Equipment/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Joseph Barrientez/OneDrive/Desktop/Fall 2026/CIDM4390_Final_Project/HeavyEquipmentMonitoring/Pages/Equipment/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph Barrientez/OneDrive/Desktop/Fall 2026/CIDM4390_Final_Project/HeavyEquipmentMonitoring/Pages/Equipment/Standby.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50XFN0YW5kYnkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Joseph Barrientez/OneDrive/Desktop/Fall 2026/CIDM4390_Final_Project/HeavyEquipmentMonitoring/Pages/Error.cshtml]

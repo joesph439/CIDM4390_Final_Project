@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using HeavyEquipmentMonitoring.Data;
@@ -19,6 +18,10 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        EquipmentList = await _context.Equipment.AsNoTracking().OrderBy(e => e.EquipmentNumber).ToListAsync();
+        EquipmentList = await _context.Equipment
+        .AsNoTracking()
+        .Where(e => !e.IsSold && !e.IsOutOfService)
+        .OrderBy(e => e.EquipmentNumber)
+        .ToListAsync();
     }
 }

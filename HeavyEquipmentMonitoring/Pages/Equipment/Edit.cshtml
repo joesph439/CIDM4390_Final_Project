@@ -1,0 +1,118 @@
+@page "{id:int}"
+@model HeavyEquipmentMonitoring.Pages.Equipment.EditModel
+
+@{
+    ViewData["Title"] = "Edit Equipment";
+}
+
+<div class="dashboard-panel equipment-form">
+
+    <div class="panel-header">
+        <h2>Edit Equipment #@Model.Equipment.EquipmentNumber</h2>
+    </div>
+
+    <div class="form-content">
+
+        <p class="form-description">
+            Update the information for this equipment.
+        </p>
+
+        <form method="post"
+              asp-route-id="@RouteData.Values["id"]">
+
+            <div asp-validation-summary="All"
+                 class="text-danger"></div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label asp-for="Equipment.EquipmentNumber">
+                        Equipment Number
+                    </label>
+
+                    <input asp-for="Equipment.EquipmentNumber"
+                           class="form-control" required />
+
+                    <span asp-validation-for="Equipment.EquipmentNumber"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Equipment.EquipmentType">
+                        Equipment Type
+                    </label>
+
+                    <select asp-for="Equipment.EquipmentType"
+                            class="form-select" required>
+
+                        <option value="">Select Equipment Type</option>
+                        <option>Bulldozer</option>
+                        <option>Excavator</option>
+                        <option>Mini Excavator</option>
+                        <option>Motor Grader</option>
+                        <option>Loader</option>
+                        <option>Backhoe</option>
+                        <option>Skid Steer</option>
+                        <option>Roller</option>
+                        <option>Paver</option>
+                        <option>Water Truck</option>
+                        <option>Company Truck</option>
+                        <option>Scraper</option>
+                        <option>Other</option>
+
+                    </select>
+
+                    <span asp-validation-for="Equipment.EquipmentType"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Equipment.EquipmentModel">
+                        Equipment Model
+                    </label>
+
+                    <input asp-for="Equipment.EquipmentModel"
+                           class="form-control" required />
+
+                    <span asp-validation-for="Equipment.EquipmentModel"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Equipment.TotalEngineHours">
+                        Total Engine Hours
+                    </label>
+
+                    <input asp-for="Equipment.TotalEngineHours"
+                           type="number"
+                           min="0"
+                           step="0.1"
+                           class="form-control" required />
+
+                    <span asp-validation-for="Equipment.TotalEngineHours"
+                          class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button type="submit" class="btn-gold">
+                    Save Changes
+                </button>
+
+                <a asp-page="./Index" class="btn-cancel">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

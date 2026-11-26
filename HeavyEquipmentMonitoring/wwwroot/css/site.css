@@ -34,6 +34,32 @@ body {
    HEAVY EQUIPMENT DASHBOARD LAYOUT
    ================================== */
 
+.dashboard-panel {
+    background: #151e29;
+    border: 1px solid #34404f;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.panel-header {
+    padding: 18px 22px;
+    border-bottom: 1px solid #34404f;
+}
+
+.panel-header h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+}
+
+.dashboard-main .equipment-table .empty-table {
+    text-align: center;
+    padding: 35px;
+    color: #9ca8b7;
+}
+
 .dashboard-body {
     margin: 0;
     background: #0b1420;
@@ -270,4 +296,202 @@ body {
 
 .dashboard-main .table-striped > tbody > tr:nth-of-type(odd) > * {
     background: #1b2a3b;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.summary-card {
+    background: linear-gradient(135deg, #1c2532, #161e29);
+    border: 1px solid #34404f;
+    border-left: 5px solid #ffc229;
+    border-radius: 10px;
+    padding: 22px;
+    min-height: 120px;
+}
+
+.summary-label {
+    color: #b9c3cf;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.summary-value {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.summary-card.total-card {
+    border-left-color: #ffc229;
+}
+
+.summary-card.running-card {
+    border-left-color: #32b65a;
+}
+
+.summary-card.idle-card {
+    border-left-color: #e6a323;
+}
+
+.summary-card.maintenance-card {
+    border-left-color: #4199e1;
+}
+
+.summary-card.off-card {
+    border-left-color: #788391;
+}
+
+
+/* ==================================
+   DASHBOARD FORMS
+   ================================== */
+
+.equipment-form {
+    max-width: 1000px;
+}
+
+.form-content {
+    padding: 28px;
+}
+
+.form-description {
+    color: #aab4c2;
+    margin-bottom: 28px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.form-group label {
+    display: block;
+    color: #d5dce5;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.dashboard-main .form-control,
+.dashboard-main .form-select {
+    background-color: #101925;
+    color: #e9edf3;
+    border: 1px solid #394555;
+    border-radius: 6px;
+    padding: 12px;
+    color-scheme: dark;
+}
+
+.dashboard-main .form-control:focus,
+.dashboard-main .form-select:focus {
+    background-color: #101925;
+    color: #ffffff;
+    border-color: #ffc229;
+    box-shadow: 0 0 0 3px rgba(255, 194, 41, 0.15);
+}
+
+.dashboard-main .form-control::placeholder {
+    color: #788391;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid #34404f;
+}
+
+/* GOLD ACTION BUTTON */
+
+.btn-gold {
+    display: inline-block;
+    background: #ffc229;
+    color: #101925;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-gold:hover {
+    background: #e6a91c;
+    color: #101925;
+}
+
+/* CANCEL BUTTON */
+
+.btn-cancel {
+    display: inline-block;
+    background: #253243;
+    color: #e9edf3;
+    border: 1px solid #394555;
+    border-radius: 6px;
+    padding: 12px 20px;
+    text-decoration: none;
+}
+
+.btn-cancel:hover {
+    background: #344357;
+    color: #ffffff;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* EQUIPMENT ACTION BUTTONS */
+
+.btn-edit {
+    display: inline-block;
+    background: rgba(255, 194, 41, 0.08);
+    color: #ffc229;
+    border: 1px solid #ffc229;
+    border-radius: 5px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.btn-edit:hover {
+    background: #ffc229;
+    color: #101925;
+}
+
+/* STANDBY EQUIPMENT DASHBOARD */
+
+.standby-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.panel-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .standby-grid {
+        grid-template-columns: 1fr;
+    }
 }

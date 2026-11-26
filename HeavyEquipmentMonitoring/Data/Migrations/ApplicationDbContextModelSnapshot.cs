@@ -107,6 +107,9 @@ namespace HeavyEquipmentMonitoring.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("ArchiveReason")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("EngineStatus")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -121,6 +124,18 @@ namespace HeavyEquipmentMonitoring.Data.Migrations
 
                     b.Property<string>("EquipmentType")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsOutOfService")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsSold")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("OutOfServiceDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("SoldDate")
                         .HasColumnType("TEXT");
 
                     b.Property<double>("TotalEngineHours")
@@ -268,6 +283,10 @@ namespace HeavyEquipmentMonitoring.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("AssignedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CrewType")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("EquipmentID")

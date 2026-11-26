@@ -1,0 +1,114 @@
+@page
+@model HeavyEquipmentMonitoring.Pages.Equipment.StandbyModel
+
+@{
+    ViewData["Title"] = "Standby Equipment";
+
+    var totalStandby = Model.StandbyEquipment.Count();
+
+    var engineOff = Model.StandbyEquipment.Count(e => e.EngineStatus == "Off");
+
+    var underMaintenance = Model.StandbyEquipment.Count(e => e.EngineStatus == "Maintenance");
+}
+
+<div class="equipment-dashboard">
+
+    <div class="page-description">
+        <p>Monitor equipment awaiting project assignment.</p>
+    </div>
+
+    <div class="summary-grid standby-grid">
+
+        <div class="summary-card idle-card">
+            <div class="summary-label">Standby Equipment</div>
+            <div class="summary-value">@totalStandby</div>
+        </div>
+
+        <div class="summary-card off-card">
+            <div class="summary-label">Engine Off</div>
+            <div class="summary-value">@engineOff</div>
+        </div>
+
+        <div class="summary-card maintenance-card">
+            <div class="summary-label">Under Maintenance</div>
+            <div class="summary-value">@underMaintenance</div>
+        </div>
+
+    </div>
+
+    <section class="dashboard-panel">
+
+        <div class="panel-header">
+
+            <h2>Unassigned Equipment</h2>
+
+            <a asp-page="./Index" class="btn-cancel">
+                Back to Inventory
+            </a>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table equipment-table">
+
+                <thead>
+                    <tr>
+                        <th>Equipment #</th>
+                        <th>Equipment Type</th>
+                        <th>Model</th>
+                        <th>Total Engine Hours</th>
+                        <th>Engine Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var equipment in Model.StandbyEquipment)
+                    {
+                        <tr>
+                            <td>@equipment.EquipmentNumber</td>
+
+                            <td>@equipment.EquipmentType</td>
+
+                            <td>@equipment.EquipmentModel</td>
+
+                            <td>
+                                @equipment.TotalEngineHours.ToString("N1") h
+                            </td>
+
+                            <td>
+                                <span class="equipment-status status-@(equipment.EngineStatus.ToLower())">
+                                    @equipment.EngineStatus
+                                </span>
+                            </td>
+
+                            <td>
+                                <a asp-page="./Edit"
+                                   asp-route-id="@equipment.EquipmentID"
+                                   class="btn-edit">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                    @if (!Model.StandbyEquipment.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="empty-table">
+                                No equipment is currently on standby.
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</div>

@@ -8,5 +8,9 @@ public class Equipment
     public string EquipmentModel {get; set;} = string.Empty;
     public double TotalEngineHours {get; set;}
     public string EngineStatus {get; set;} = string.Empty;
-
+    public bool IsSold {get; set;} = false;
+    public DateTime? SoldDate {get; set;}
+    public bool IsOutOfService {get; set;} = false;
+    public DateTime? OutOfServiceDate {get; set;}
+    public string? ArchiveReason {get; set;}
 }
