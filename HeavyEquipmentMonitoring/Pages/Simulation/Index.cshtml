@@ -1,0 +1,594 @@
+@page
+@model HeavyEquipmentMonitoring.Pages.Simulation.IndexModel
+
+@{
+    ViewData["Title"] = "Simulation Control Panel";
+}
+
+<div class="equipment-dashboard simulation-dashboard">
+
+    <!-- Page Header -->
+
+    <div class="simulation-header">
+
+        <div>
+            <h2>Simulation Control Panel</h2>
+
+            <p>
+                Manage and monitor simulated equipment operations.
+            </p>
+        </div>
+
+        <span class="simulation-monitor-badge">
+            Monitoring Enabled
+        </span>
+
+    </div>
+
+    <!-- Operation Feedback -->
+
+    @if (!string.IsNullOrWhiteSpace(Model.SuccessMessage))
+    {
+        <div class="simulation-message simulation-success">
+            @Model.SuccessMessage
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="simulation-message simulation-error">
+            @Model.ErrorMessage
+        </div>
+    }
+
+    <!-- Summary Cards -->
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+            <div class="summary-label">Total Fleet</div>
+
+            <div class="summary-value simulation-gold">
+                @Model.TotalEquipment
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-label">Running</div>
+
+            <div class="summary-value simulation-green">
+                @Model.RunningEquipment
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-label">Idle</div>
+
+            <div class="summary-value simulation-yellow">
+                @Model.IdleEquipment
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-label">Maintenance</div>
+
+            <div class="summary-value simulation-blue">
+                @Model.MaintenanceEquipment
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-label">Off</div>
+
+            <div class="summary-value simulation-gray">
+                @Model.OffEquipment
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Simulation Settings -->
+
+    <div class="dashboard-panel">
+
+        <div class="panel-header">
+            <h3>Simulation Settings</h3>
+        </div>
+
+        <div class="simulation-settings">
+
+            <div class="simulation-settings-grid">
+
+                <div class="form-group">
+
+                    <label>Operating Mode</label>
+
+                    <input class="form-control"
+                           value="Manual"
+                           readonly />
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Simulation Speed</label>
+
+                    <input class="form-control"
+                           value="1x - Real Time"
+                           readonly />
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Telemetry Interval</label>
+
+                    <input class="form-control"
+                           value="Approximately 60 seconds"
+                           readonly />
+
+                </div>
+
+            </div>
+
+            <div class="simulation-refresh-settings">
+
+                <label class="simulation-refresh-option">
+
+                    <input type="checkbox"
+                           id="autoRefresh"
+                           checked />
+
+                    Auto-refresh every 10 seconds
+
+                </label>
+
+                <span id="refreshCountdown"
+                      class="simulation-refresh-countdown">
+                </span>
+
+                <a asp-page="./Index"
+                   class="btn btn-edit">
+                    Refresh Now
+                </a>
+
+            </div>
+
+            <p class="simulation-help">
+                Running and Idle equipment automatically accumulate
+                engine hours while the application is online.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Equipment Controls -->
+
+    <div class="dashboard-panel">
+
+        <div class="panel-header">
+
+            <h3>Equipment Controls</h3>
+
+            <span class="simulation-record-count">
+                @Model.TotalEquipment machines
+            </span>
+
+        </div>
+
+        <div class="simulation-equipment-grid">
+
+            @foreach (var equipment in Model.EquipmentList)
+            {
+                <div class="simulation-equipment-card">
+
+                    <!-- Equipment Information -->
+
+                    <div class="simulation-card-header">
+
+                        <div>
+
+                            <h4>
+                                #@equipment.EquipmentNumber
+                            </h4>
+
+                            <div class="simulation-equipment-model">
+                                @equipment.EquipmentModel
+                            </div>
+
+                            <div class="simulation-equipment-type">
+                                @equipment.EquipmentType
+                            </div>
+
+                        </div>
+
+                        <span class="equipment-status status-@(equipment.EngineStatus.ToLowerInvariant())">
+
+                            @equipment.EngineStatus
+
+                        </span>
+
+                    </div>
+
+                    <!-- Lifetime Engine Hours -->
+
+                    <div class="simulation-meter">
+
+                        <span class="simulation-meter-label">
+                            Lifetime Engine Hours
+                        </span>
+
+                        <div class="simulation-meter-value">
+
+                            @equipment.TotalEngineHours.ToString("N4")
+
+                            <span>hrs</span>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Project and Crew -->
+
+                    <div class="simulation-assignment">
+
+                        <div>
+
+                            <span class="simulation-detail-label">
+                                Project
+                            </span>
+
+                            @if (equipment.ProjectName == "Standby")
+                            {
+                                <span class="equipment-status status-standby">
+                                    Standby
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="simulation-detail-value">
+                                    @equipment.ProjectName
+                                </span>
+                            }
+
+                        </div>
+
+                        <div>
+
+                            <span class="simulation-detail-label">
+                                Crew
+                            </span>
+
+                            @if (equipment.CrewType == "Unassigned")
+                            {
+                                <span class="unassigned-crew">
+                                    Unassigned
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="crew-badge crew-@(equipment.CrewType.ToLowerInvariant())">
+                                    @equipment.CrewType
+                                </span>
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <!-- Engine Tracking Information -->
+
+                    <div class="simulation-timestamps">
+
+                        <div>
+
+                            <span>Engine Started</span>
+
+                            <strong>
+                                @(equipment.EngineStartedAt.HasValue? equipment.EngineStartedAt.Value.ToString("MM/dd/yyyy HH:mm:ss") + " UTC" : "--")
+                            </strong>
+
+                        </div>
+
+                        <div>
+
+                            <span>Last Status Change</span>
+
+                            <strong>
+                                @(equipment.EngineStatusChangedAt.HasValue? equipment.EngineStatusChangedAt.Value.ToString("MM/dd/yyyy HH:mm:ss") + " UTC" : "--")
+                            </strong>
+
+                        </div>
+
+                        <div>
+
+                            <span>Last Telemetry Checkpoint</span>
+
+                            <strong>
+                                @(equipment.LastTelemetryAt.HasValue? equipment.LastTelemetryAt.Value.ToString("MM/dd/yyyy HH:mm:ss") + " UTC" : "--")
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Equipment Restrictions -->
+
+                    @if (equipment.HasConflictingAssignments)
+                    {
+                        <div class="simulation-card-warning">
+                            Conflicting project assignments detected.
+                        </div>
+                    }
+                    else if (equipment.EngineStatus == "Maintenance")
+                    {
+                        <div class="simulation-card-warning">
+                            Equipment is currently under maintenance.
+                        </div>
+                    }
+                    else if (!equipment.CanOperate)
+                    {
+                        <div class="simulation-card-warning">
+                            Equipment tracking information is invalid.
+                        </div>
+                    }
+
+                    <!-- Engine Control Buttons -->
+
+                    <div class="simulation-controls">
+
+                        <form method="post"
+                              asp-page-handler="Start">
+
+                            <input type="hidden"
+                                   name="equipmentID"
+                                   value="@equipment.EquipmentID" />
+
+                            <button type="submit"
+                                    class="simulation-btn simulation-btn-start"
+                                    disabled="@(!equipment.CanOperate || equipment.EngineStatus == "Running")">
+
+                                @(equipment.EngineStatus == "Idle"
+                                    ? "Resume"
+                                    : "Start")
+
+                            </button>
+
+                        </form>
+
+                        <form method="post"
+                              asp-page-handler="Idle">
+
+                            <input type="hidden"
+                                   name="equipmentID"
+                                   value="@equipment.EquipmentID" />
+
+                            <button type="submit"
+                                    class="simulation-btn simulation-btn-idle"
+                                    disabled="@(!equipment.CanOperate || equipment.EngineStatus == "Idle")">
+
+                                Idle
+
+                            </button>
+
+                        </form>
+
+                        <form method="post"
+                              asp-page-handler="Stop">
+
+                            <input type="hidden"
+                                   name="equipmentID"
+                                   value="@equipment.EquipmentID" />
+
+                            <button type="submit"
+                                    class="simulation-btn simulation-btn-stop"
+                                    disabled="@((equipment.EngineStatus != "Running" && equipment.EngineStatus != "Idle") || !equipment.LastTelemetryAt.HasValue)">
+
+                                Stop
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            }
+
+            @if (!Model.EquipmentList.Any())
+            {
+                <div class="simulation-empty">
+                    No available equipment found.
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+    <!-- Recent Telemetry -->
+
+    <div class="dashboard-panel">
+
+        <div class="panel-header">
+
+            <h3>Recent Telemetry Activity</h3>
+
+            <span class="simulation-record-count">
+                Latest @Model.RecentTelemetry.Count records
+            </span>
+
+        </div>
+
+        <div class="simulation-table-wrapper">
+
+            <table class="equipment-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Telemetry ID</th>
+                        <th>Equipment #</th>
+                        <th>Status</th>
+                        <th>Start Time (UTC)</th>
+                        <th>End Time (UTC)</th>
+                        <th>Engine Seconds</th>
+                        <th>Recorded Hours</th>
+                        <th>Lifetime Hours</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var telemetry in Model.RecentTelemetry)
+                    {
+                        <tr>
+
+                            <td>@telemetry.TelemetryID</td>
+
+                            <td>@telemetry.EquipmentNumber</td>
+
+                            <td>
+
+                                <span class="equipment-status status-@(telemetry.EngineStatus.ToLowerInvariant())">
+                                    @telemetry.EngineStatus
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                <span class="telemetry-date">
+                                    @telemetry.StartTime.ToString("MM/dd/yyyy")
+                                </span>
+
+                                <span class="telemetry-time">
+                                    @telemetry.StartTime.ToString("HH:mm:ss")
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="telemetry-date">
+                                    @telemetry.EndTime.ToString("MM/dd/yyyy")
+                                </span>
+
+                                <span class="telemetry-time">
+                                    @telemetry.EndTime.ToString("HH:mm:ss")
+                                </span>
+                            </td>
+
+
+                            <td>
+                                @telemetry.EngineOnSeconds.ToString("N0")
+                            </td>
+
+                            <td class="simulation-green">
+                                @telemetry.RecordedEngineHours.ToString("N4")
+                            </td>
+
+                            <td class="simulation-gold">
+                                @telemetry.TotalEngineHours.ToString("N4")
+                            </td>
+
+                        </tr>
+                    }
+
+                    @if (!Model.RecentTelemetry.Any())
+                    {
+                        <tr>
+
+                            <td colspan="8"
+                                class="simulation-empty">
+
+                                No telemetry records have been generated yet.
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+
+        const refreshCheckbox = document.getElementById("autoRefresh");
+
+        const countdownLabel = document.getElementById("refreshCountdown");
+
+        const refreshInterval = 10;
+
+        let secondsRemaining = refreshInterval;
+
+        let commandSubmitting = false;
+
+        refreshCheckbox.checked = localStorage.getItem("simulationAutoRefresh") !== "false";
+
+        function updateCountdown() {
+
+            countdownLabel.textContent = refreshCheckbox.checked
+                    ? `Refreshing in ${secondsRemaining}s`
+                    : "Auto-refresh paused";
+        }
+
+        refreshCheckbox.addEventListener("change", function () {
+
+            localStorage.setItem("simulationAutoRefresh", this.checked.toString()
+            );
+
+            secondsRemaining = refreshInterval;
+
+            updateCountdown();
+        });
+
+        document.querySelectorAll(".simulation-controls form").forEach(form => {
+                form.addEventListener("submit", function (event) {
+
+                    if (commandSubmitting) {
+
+                        event.preventDefault();
+
+                        return;
+                    }
+
+                    commandSubmitting = true;
+
+                    countdownLabel.textContent =
+                        "Executing engine command...";
+                });
+            });
+
+        setInterval(function () {
+
+            if (!refreshCheckbox.checked || commandSubmitting) {
+                return;
+            }
+
+            secondsRemaining--;
+
+            if (secondsRemaining <= 0) {
+
+                window.location.reload();
+
+                return;
+            }
+
+            updateCountdown();
+
+        }, 1000);
+
+        updateCountdown();
+
+    </script>
+}

@@ -8,6 +8,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<Equipment> Equipment {get; set;}
     public DbSet<EquipmentSession> EquipmentSession {get; set;}
+    public DbSet<EquipmentTelemetry> EquipmentTelemetry {get; set;}
     public DbSet<Inspection> Inspection {get; set;}
     public DbSet<DailyInspection> DailyInspection {get; set;}
     public DbSet<Maintenance> Maintenance {get; set;}
@@ -17,6 +18,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<ProjectUser> ProjectUser {get; set;}
     public DbSet<Alert> Alert {get; set;}
     public DbSet<AlertRecipient> AlertRecipient {get; set;}
+    public DbSet<SimulationSettings> SimulationSettings {get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -44,6 +46,10 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<Alert>().HasKey(a => a.AlertID);
 
         modelBuilder.Entity<AlertRecipient>().HasKey(ar => ar.RecipientID);
+
+        modelBuilder.Entity<EquipmentTelemetry>().HasKey(et => et.TelemetryID);
+
+        modelBuilder.Entity<SimulationSettings>().HasKey(s => s.SimulationSettingsID);
 
         // Table Relationships
 
@@ -91,5 +97,70 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
         // Alert -> AlertRecipient
         modelBuilder.Entity<AlertRecipient>().HasOne<Alert>().WithMany().HasForeignKey(ar => ar.AlertID);
+
+        modelBuilder.Entity<EquipmentTelemetry>().HasOne<Equipment>().WithMany().HasForeignKey(et => et.EquipmentID).OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<EquipmentTelemetry>().HasOne<ProjectEquipment>().WithMany().HasForeignKey(et => et.ProjEquipID).OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<EquipmentTelemetry>().HasOne<EquipmentSession>().WithMany().HasForeignKey(et => et.SessionID).OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<EquipmentTelemetry>().HasIndex(et => new{et.EquipmentID, et.StartTime});
+
+        modelBuilder.Entity<EquipmentTelemetry>().HasIndex(et => new{et.ProjEquipID, et.StartTime});
+
+        modelBuilder.Entity<EquipmentTelemetry>().HasIndex(et => new{et.SessionID, et.StartTime});
+
+        modelBuilder.Entity<SimulationSettings>().ToTable("SimulationSettings", table =>
+        {
+            table.HasCheckConstraint("CK_SimulationSettings_SingleRecord", "SimulationSettingsID = 1");
+
+            table.HasCheckConstraint("CK_SimulationSettings_Speed", "SimulationSpeed IN (1, 10, 60)");
+
+            table.HasCheckConstraint("CK_SimulationSettings_Mode", "OperatingMode IN ('Manual', 'Automatic', 'Hybrid')");
+        });
+
+
+        modelBuilder.Entity<SimulationSettings>().HasData(new SimulationSettings
+        {
+            SimulationSettingsID = 1,
+
+            OperatingMode = "Manual",
+
+            SimulationSpeed = 1,
+
+            WorkStartTime = new TimeSpan(7, 0, 0),
+
+            WorkEndTime = new TimeSpan(17, 0, 0),
+
+            WorkMonday = true,
+
+            WorkTuesday = true,
+
+            WorkWednesday = true,
+
+            WorkThursday = true,
+
+            WorkFriday = true,
+
+            WorkSaturday = true,
+
+            WorkSunday = false,
+
+            MinimumRunningMinutes = 15,
+
+            MaximumRunningMinutes = 90,
+
+            MinimumIdleMinutes = 2,
+
+            MaximumIdleMinutes = 15,
+
+            MinimumOffMinutes = 5,
+
+            MaximumOffMinutes = 30,
+
+            SimulationTimeUtc = null,
+
+            UpdatedAtUtc = null
+        });
     }
 }

@@ -110,8 +110,14 @@ namespace HeavyEquipmentMonitoring.Data.Migrations
                     b.Property<string>("ArchiveReason")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime?>("EngineStartedAt")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("EngineStatus")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("EngineStatusChangedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("EquipmentModel")
@@ -126,11 +132,23 @@ namespace HeavyEquipmentMonitoring.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsManualOverride")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsOutOfService")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsSold")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("LastTelemetryAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ManualOverrideAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("NextEngineTransitionAt")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("OutOfServiceDate")
                         .HasColumnType("TEXT");
@@ -177,6 +195,48 @@ namespace HeavyEquipmentMonitoring.Data.Migrations
                     b.HasIndex("OperatorID");
 
                     b.ToTable("EquipmentSession");
+                });
+
+            modelBuilder.Entity("HeavyEquipmentMonitoring.Models.EquipmentTelemetry", b =>
+                {
+                    b.Property<int>("TelemetryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("EngineOnSeconds")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("EngineStatus")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("EquipmentID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ProjEquipID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("SessionID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("TotalEngineHours")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("TelemetryID");
+
+                    b.HasIndex("EquipmentID", "StartTime");
+
+                    b.HasIndex("ProjEquipID", "StartTime");
+
+                    b.HasIndex("SessionID", "StartTime");
+
+                    b.ToTable("EquipmentTelemetry");
                 });
 
             modelBuilder.Entity("HeavyEquipmentMonitoring.Models.Inspection", b =>
@@ -327,6 +387,105 @@ namespace HeavyEquipmentMonitoring.Data.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("ProjectUser");
+                });
+
+            modelBuilder.Entity("HeavyEquipmentMonitoring.Models.SimulationSettings", b =>
+                {
+                    b.Property<int>("SimulationSettingsID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MaximumIdleMinutes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MaximumOffMinutes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MaximumRunningMinutes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MinimumIdleMinutes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MinimumOffMinutes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MinimumRunningMinutes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("OperatingMode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SimulationSpeed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("SimulationTimeUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<TimeSpan>("WorkEndTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("WorkFriday")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("WorkMonday")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("WorkSaturday")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<TimeSpan>("WorkStartTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("WorkSunday")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("WorkThursday")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("WorkTuesday")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("WorkWednesday")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("SimulationSettingsID");
+
+                    b.ToTable("SimulationSettings", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_SimulationSettings_Mode", "OperatingMode IN ('Manual', 'Automatic', 'Hybrid')");
+
+                            t.HasCheckConstraint("CK_SimulationSettings_SingleRecord", "SimulationSettingsID = 1");
+
+                            t.HasCheckConstraint("CK_SimulationSettings_Speed", "SimulationSpeed IN (1, 10, 60)");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            SimulationSettingsID = 1,
+                            MaximumIdleMinutes = 15,
+                            MaximumOffMinutes = 30,
+                            MaximumRunningMinutes = 90,
+                            MinimumIdleMinutes = 2,
+                            MinimumOffMinutes = 5,
+                            MinimumRunningMinutes = 15,
+                            OperatingMode = "Manual",
+                            SimulationSpeed = 1,
+                            WorkEndTime = new TimeSpan(0, 17, 0, 0, 0),
+                            WorkFriday = true,
+                            WorkMonday = true,
+                            WorkSaturday = true,
+                            WorkStartTime = new TimeSpan(0, 7, 0, 0, 0),
+                            WorkSunday = false,
+                            WorkThursday = true,
+                            WorkTuesday = true,
+                            WorkWednesday = true
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -593,6 +752,25 @@ namespace HeavyEquipmentMonitoring.Data.Migrations
                         .HasForeignKey("OperatorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HeavyEquipmentMonitoring.Models.EquipmentTelemetry", b =>
+                {
+                    b.HasOne("HeavyEquipmentMonitoring.Models.Equipment", null)
+                        .WithMany()
+                        .HasForeignKey("EquipmentID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HeavyEquipmentMonitoring.Models.ProjectEquipment", null)
+                        .WithMany()
+                        .HasForeignKey("ProjEquipID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("HeavyEquipmentMonitoring.Models.EquipmentSession", null)
+                        .WithMany()
+                        .HasForeignKey("SessionID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("HeavyEquipmentMonitoring.Models.Inspection", b =>
