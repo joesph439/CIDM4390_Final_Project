@@ -278,4 +278,4 @@ C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\Hea
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\ref\HeavyEquipmentMonitoring.dll
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\t7fqkvupxq-{0}-au77yzyi7o-au77yzyi7o.gz
 C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\bj021fa2ff-{0}-au77yzyi7o-au77yzyi7o.gz
-C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\0l9iyax5rj-{0}-ef5yo4rrp4-ef5yo4rrp4.gz
+C:\Users\Joseph Barrientez\OneDrive\Desktop\Fall 2026\CIDM4390_Final_Project\HeavyEquipmentMonitoring\obj\Debug\net10.0\compressed\0l9iyax5rj-{0}-4lv9evfcaq-4lv9evfcaq.gz

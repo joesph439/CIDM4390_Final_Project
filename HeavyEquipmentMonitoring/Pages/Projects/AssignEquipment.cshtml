@@ -1,0 +1,209 @@
+@page "{id:int}"
+@model HeavyEquipmentMonitoring.Pages.Projects.AssignEquipmentModel
+
+@{
+    ViewData["Title"] = "Assign Equipment";
+}
+
+<div class="equipment-dashboard">
+
+    <section class="dashboard-panel equipment-form">
+
+        <div class="panel-header">
+
+            <h2>Equipment Assignment</h2>
+
+            <span class="equipment-status status-active">
+                @Model.Project.ProjectStatus
+            </span>
+
+        </div>
+
+        <div class="form-content">
+
+            <p class="form-description">
+                Assign available standby equipment to this
+                construction project and select its crew.
+            </p>
+
+            <form method="post"
+                  asp-route-id="@Model.Project.ProjectID">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger">
+                </div>
+
+                <!-- PROJECT INFORMATION -->
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Destination Project</label>
+
+                        <input type="text"
+                               class="form-control"
+                               value="@Model.Project.ProjectName"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Project ID</label>
+
+                        <input type="text"
+                               class="form-control"
+                               value="@Model.Project.ProjectID"
+                               readonly />
+
+                    </div>
+
+                </div>
+
+                <!-- EQUIPMENT SELECTION -->
+
+                <div class="assignment-field">
+
+                    <label asp-for="Input.EquipmentID">
+                        Available Equipment *
+                    </label>
+
+                    <select asp-for="Input.EquipmentID"
+                            class="form-select"
+                            required>
+
+                        <option value="">
+                            -- Select Equipment --
+                        </option>
+
+                        @foreach (var equipment in Model.AvailableEquipment)
+                        {
+                            <option value="@equipment.EquipmentID">
+                                @equipment.EquipmentNumber -
+                                @equipment.EquipmentType -
+                                @equipment.EquipmentModel
+                            </option>
+                        }
+
+                    </select>
+
+                    <span asp-validation-for="Input.EquipmentID"
+                          class="text-danger">
+                    </span>
+
+                    <p class="assignment-help">
+                        @Model.AvailableEquipment.Count
+                        equipment available for assignment.
+                    </p>
+
+                </div>
+
+                <!-- CREW SELECTION -->
+
+                <div class="assignment-field">
+
+                    <label>Crew Type *</label>
+
+                    <div class="crew-selection-grid">
+
+                        @foreach (var crew in Model.CrewTypes)
+                        {
+                            <label class="crew-option">
+
+                                <input type="radio"
+                                       asp-for="Input.CrewType"
+                                       value="@crew"
+                                       required />
+
+                                <span class="crew-selection-card crew-@(crew.ToLowerInvariant())">
+
+                                    @crew
+
+                                </span>
+
+                            </label>
+                        }
+
+                    </div>
+
+                    <span asp-validation-for="Input.CrewType"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- ASSIGNMENT DATE -->
+
+                <div class="assignment-field">
+
+                    <label>Assigned Date</label>
+
+                    <input type="text"
+                           class="form-control"
+                           value="Automatically recorded when assigned"
+                           readonly />
+
+                </div>
+
+                <!-- ASSIGNMENT NOTICE -->
+
+                <div class="project-notice">
+
+                    <strong>Equipment Assignment</strong>
+
+                    <p>
+                        The selected equipment will be removed
+                        from standby and assigned to this project
+                        and crew.
+                    </p>
+
+                </div>
+
+                @if (!Model.AvailableEquipment.Any())
+                {
+                    <div class="archive-warning">
+
+                        <strong>No Available Equipment</strong>
+
+                        <p>
+                            There is currently no eligible standby
+                            equipment available for assignment.
+                        </p>
+
+                    </div>
+                }
+
+                <!-- FORM ACTIONS -->
+
+                <div class="form-actions">
+
+                    <button type="submit"
+                            class="btn-gold"
+                            disabled="@(!Model.AvailableEquipment.Any())">
+
+                        Assign Equipment
+
+                    </button>
+
+                    <a asp-page="./Details"
+                       asp-route-id="@Model.Project.ProjectID"
+                       class="btn-cancel">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

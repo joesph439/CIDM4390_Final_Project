@@ -1,0 +1,246 @@
+@page "{id:int}"
+@model HeavyEquipmentMonitoring.Pages.Projects.RemoveEquipmentModel
+
+@{
+    ViewData["Title"] = "Remove Equipment from Project";
+}
+
+<div class="equipment-dashboard">
+
+    <section class="dashboard-panel equipment-form">
+
+        <div class="panel-header">
+
+            <h2>Equipment Removal</h2>
+
+            <span class="equipment-status status-@(Model.Project.ProjectStatus.ToLowerInvariant())">
+                @Model.Project.ProjectStatus
+            </span>
+
+        </div>
+
+        <div class="form-content">
+
+            <p class="form-description">
+                Review the equipment information before
+                returning it to standby.
+            </p>
+
+            <form method="post"
+                  asp-route-id="@Model.Assignment.ProjEquipID">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger">
+                </div>
+
+                <!-- EQUIPMENT INFORMATION -->
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Current Project</label>
+
+                        <input class="form-control"
+                               value="@Model.Project.ProjectName"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Equipment Number</label>
+
+                        <input class="form-control"
+                               value="@Model.Equipment.EquipmentNumber"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Equipment Type</label>
+
+                        <input class="form-control"
+                               value="@Model.Equipment.EquipmentType"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Equipment Model</label>
+
+                        <input class="form-control"
+                               value="@Model.Equipment.EquipmentModel"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Total Engine Hours</label>
+
+                        <input class="form-control"
+                               value="@Model.Equipment.TotalEngineHours.ToString("N1")"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Engine Status</label>
+
+                        <input class="form-control"
+                               value="@Model.Equipment.EngineStatus"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Assigned Date</label>
+
+                        <input class="form-control"
+                               value="@Model.Assignment.AssignedDate.ToString("MM/dd/yyyy")"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Removal Date</label>
+
+                        <input class="form-control"
+                               value="Automatically recorded"
+                               readonly />
+
+                    </div>
+
+                </div>
+
+                <!-- CURRENT CREW -->
+
+                <div class="assignment-field">
+
+                    <label>Current Crew</label>
+
+                    <div class="current-crew-display">
+
+                        <span class="crew-badge crew-@(Model.Assignment.CrewType.ToLowerInvariant())">
+
+                            @Model.Assignment.CrewType
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- ASSIGNMENT CHANGE -->
+
+                <div class="removal-transition">
+
+                    <div class="removal-location">
+
+                        <span class="removal-location-label">
+                            Current Assignment
+                        </span>
+
+                        <strong>
+                            @Model.Project.ProjectName
+                        </strong>
+
+                        <span class="crew-badge crew-@(Model.Assignment.CrewType.ToLowerInvariant())">
+
+                            @Model.Assignment.CrewType
+
+                        </span>
+
+                    </div>
+
+                    <div class="removal-arrow">
+                        &rarr;
+                    </div>
+
+                    <div class="removal-location">
+
+                        <span class="removal-location-label">
+                            New Assignment
+                        </span>
+
+                        <strong class="standby-text">
+                            Standby
+                        </strong>
+
+                        <span class="unassigned-crew">
+                            Unassigned
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- REMOVAL CONFIRMATION -->
+
+                <div class="archive-warning">
+
+                    <strong>Confirm Equipment Removal</strong>
+
+                    <p>
+                        This equipment will be removed from
+                        @Model.Project.ProjectName and returned
+                        to standby.
+                    </p>
+
+                    <p>
+                        All previous project and crew assignment
+                        records will be preserved.
+                        The equipment will remain in the
+                        company inventory.
+                    </p>
+
+                </div>
+
+                <!-- REMOVAL RESTRICTIONS -->
+
+                @if (!Model.CanRemove)
+                {
+                    <div class="removal-blocked">
+
+                        <strong>Equipment Removal Unavailable</strong>
+
+                        <p>@Model.RemovalBlockReason</p>
+
+                    </div>
+                }
+
+                <!-- FORM ACTIONS -->
+
+                <div class="form-actions">
+
+                    <button type="submit"
+                            class="btn-danger-custom"
+                            disabled="@(!Model.CanRemove)">
+
+                        Remove Equipment
+
+                    </button>
+
+                    <a asp-page="./Details"
+                       asp-route-id="@Model.Project.ProjectID"
+                       class="btn-cancel">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</div>

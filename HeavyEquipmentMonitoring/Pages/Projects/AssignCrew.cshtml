@@ -1,0 +1,236 @@
+@page "{id:int}"
+@model HeavyEquipmentMonitoring.Pages.Projects.AssignCrewModel
+
+@{
+    ViewData["Title"] = "Change Crew Assignment";
+}
+
+<div class="equipment-dashboard">
+
+    <section class="dashboard-panel equipment-form">
+
+        <div class="panel-header">
+
+            <h2>Equipment Crew Transfer</h2>
+
+            <span class="equipment-status status-@(Model.Project.ProjectStatus.ToLowerInvariant())">
+                @Model.Project.ProjectStatus
+            </span>
+
+        </div>
+
+        <div class="form-content">
+
+            <p class="form-description">
+                Transfer equipment to another crew within
+                the same construction project.
+            </p>
+
+            <form method="post"
+                  asp-route-id="@Model.Assignment.ProjEquipID">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger">
+                </div>
+
+                <!-- EQUIPMENT INFORMATION -->
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Project</label>
+
+                        <input class="form-control"
+                               value="@Model.Project.ProjectName"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Equipment Number</label>
+
+                        <input class="form-control"
+                               value="@Model.Equipment.EquipmentNumber"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Equipment Type</label>
+
+                        <input class="form-control"
+                               value="@Model.Equipment.EquipmentType"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Equipment Model</label>
+
+                        <input class="form-control"
+                               value="@Model.Equipment.EquipmentModel"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Engine Status</label>
+
+                        <input class="form-control"
+                               value="@Model.Equipment.EngineStatus"
+                               readonly />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Assigned Date</label>
+
+                        <input class="form-control"
+                               value="@Model.Assignment.AssignedDate.ToString("MM/dd/yyyy")"
+                               readonly />
+
+                    </div>
+
+                </div>
+
+                <!-- CURRENT CREW -->
+
+                <div class="assignment-field">
+
+                    <label>Current Crew</label>
+
+                    <div class="current-crew-display">
+
+                        <span class="crew-badge crew-@(Model.Assignment.CrewType.ToLowerInvariant())">
+
+                            @Model.Assignment.CrewType
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- NEW CREW SELECTION -->
+
+                <div class="assignment-field">
+
+                    <label>New Crew *</label>
+
+                    <div class="crew-selection-grid">
+
+                        @foreach (var crew in Model.CrewTypes)
+                            {
+                                bool isCurrentCrew = crew == Model.Assignment.CrewType;
+
+                                <label class="crew-option">
+
+                                    <input type="radio"
+                                        asp-for="Input.CrewType"
+                                        id="crew-@crew"
+                                        value="@crew"
+                                        disabled="@isCurrentCrew"
+                                        required />
+
+                                    <span class="crew-selection-card crew-@(crew.ToLowerInvariant())">
+
+                                        @crew
+
+                                        @if (isCurrentCrew)
+                                            {
+                                                <small class="current-crew-label">
+                                                    Current Crew
+                                                </small>
+                                            }
+
+                                    </span>
+
+                                </label>
+                            }
+                    </div>
+
+                    <span asp-validation-for="Input.CrewType" class="text-danger"></span>
+
+                </div>
+                
+                <!-- TRANSFER INFORMATION -->
+
+                <div class="project-notice">
+
+                    <strong>Crew Assignment History</strong>
+
+                    <p>
+                        Transferring this equipment will close
+                        its current crew assignment and create
+                        a new assignment record.
+                    </p>
+
+                    <p>
+                        Previous assignment history will be
+                        preserved. The equipment will remain
+                        assigned to @Model.Project.ProjectName.
+                    </p>
+
+                </div>
+
+                <!-- EQUIPMENT STATUS WARNING -->
+
+                @if (Model.Equipment.EngineStatus != "Off" ||
+                     Model.Equipment.IsSold ||
+                     Model.Equipment.IsOutOfService)
+                {
+                    <div class="archive-warning">
+
+                        <strong>Equipment Transfer Unavailable</strong>
+
+                        <p>
+                            Equipment must be available and its
+                            engine must be Off before transferring
+                            to another crew.
+                        </p>
+
+                    </div>
+                }
+
+                <!-- FORM ACTIONS -->
+
+                <div class="form-actions">
+
+                    <button type="submit"
+                            class="btn-gold"
+                            disabled="@(Model.Equipment.EngineStatus != "Off" ||
+                                        Model.Equipment.IsSold ||
+                                        Model.Equipment.IsOutOfService ||
+                                        Model.Project.ProjectStatus != "Active")">
+
+                        Transfer Equipment
+
+                    </button>
+
+                    <a asp-page="./Details"
+                       asp-route-id="@Model.Project.ProjectID"
+                       class="btn-cancel">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

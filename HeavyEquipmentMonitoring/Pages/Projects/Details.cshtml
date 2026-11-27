@@ -1,0 +1,321 @@
+@page "{id:int}"
+@model HeavyEquipmentMonitoring.Pages.Projects.DetailsModel
+
+@{
+    ViewData["Title"] = Model.Project.ProjectName;
+}
+
+<div class="equipment-dashboard">
+
+    <!-- PROJECT INFORMATION -->
+
+    <section class="dashboard-panel project-header">
+
+        <div class="project-header-info">
+
+            <div>
+
+                <h2>@Model.Project.ProjectName</h2>
+
+                <div class="project-metadata">
+
+                    <span>
+                        Project #@Model.Project.ProjectID
+                    </span>
+
+                    <span>
+                        Start Date:
+                        @Model.Project.StartDate.ToString("MM/dd/yyyy")
+                    </span>
+
+                    <span>
+                        End Date:
+                        @(Model.Project.EndDate?.ToString("MM/dd/yyyy") ?? "—")
+                    </span>
+
+                </div>
+
+            </div>
+
+            <span class="equipment-status status-@(Model.Project.ProjectStatus.ToLowerInvariant())">
+                @Model.Project.ProjectStatus
+            </span>
+
+        </div>
+
+    </section>
+
+    <!-- PROJECT SUMMARY CARDS -->
+
+    <div class="summary-grid">
+
+        <div class="summary-card total-card">
+            <div class="summary-label">Assigned Equipment</div>
+            <div class="summary-value">@Model.AssignedEquipment</div>
+        </div>
+
+        <div class="summary-card running-card">
+            <div class="summary-label">Running</div>
+            <div class="summary-value">@Model.RunningEquipment</div>
+        </div>
+
+        <div class="summary-card idle-card">
+            <div class="summary-label">Idle</div>
+            <div class="summary-value">@Model.IdleEquipment</div>
+        </div>
+
+        <div class="summary-card maintenance-card">
+            <div class="summary-label">Maintenance</div>
+            <div class="summary-value">@Model.MaintenanceEquipment</div>
+        </div>
+
+        <div class="summary-card off-card">
+            <div class="summary-label">Off</div>
+            <div class="summary-value">@Model.OffEquipment</div>
+        </div>
+
+    </div>
+
+    <!-- PROJECT ANALYTICS -->
+
+    <div class="analytics-grid">
+
+        <section class="dashboard-panel analytics-panel">
+
+            <div class="panel-header">
+                <h2>Most Used Equipment</h2>
+            </div>
+
+            <div class="project-chart-placeholder">
+
+                <span>Project Engine Hours</span>
+
+                <p>Project usage analytics will appear here.</p>
+
+            </div>
+
+        </section>
+
+        <section class="dashboard-panel analytics-panel">
+
+            <div class="panel-header">
+                <h2>Inspections by Operator</h2>
+            </div>
+
+            <div class="project-chart-placeholder">
+
+                <span>Completed Inspections</span>
+
+                <p>Inspection analytics will appear here.</p>
+
+            </div>
+
+        </section>
+
+        <section class="dashboard-panel analytics-panel">
+
+            <div class="panel-header">
+                <h2>Engine Hours by Crew</h2>
+            </div>
+
+            <div class="project-chart-placeholder">
+
+                <div class="project-crew-legend">
+
+                    <span class="crew-badge crew-dirt">
+                        DIRT
+                    </span>
+
+                    <span class="crew-badge crew-ashp">
+                        ASPHALT
+                    </span>
+
+                    <span class="crew-badge crew-conc">
+                        CONCRETE
+                    </span>
+
+                    <span class="crew-badge crew-utilities">
+                        UTILITIES
+                    </span>
+
+                </div>
+
+                <p>Crew utilization analytics will appear here.</p>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- PROJECT EQUIPMENT TABLE -->
+
+    <section class="dashboard-panel">
+
+        <div class="panel-header">
+
+            <h2>Project Equipment</h2>
+
+            <div class="panel-actions">
+
+                @if (Model.Project.ProjectStatus == "Active")
+                {
+                    <a asp-page="./AssignEquipment"
+                       asp-route-id="@Model.Project.ProjectID"
+                       class="btn-gold">
+                        Assign Equipment
+                    </a>
+                }
+
+            </div>
+
+        </div>
+
+        <div class="search-result-info">
+            @Model.AssignedEquipment equipment assigned to this project
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table equipment-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Equipment #</th>
+                        <th>Crew</th>
+                        <th>Equipment Type</th>
+                        <th>Model</th>
+                        <th>Total Engine Hours</th>
+                        <th>Assigned Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var equipment in Model.EquipmentList)
+                    {
+                        <tr>
+
+                            <td>@equipment.EquipmentNumber</td>
+
+                            <td>
+
+                                @if (string.IsNullOrWhiteSpace(equipment.CrewType))
+                                {
+                                    <span class="unassigned-crew">
+                                        Unassigned
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="crew-badge crew-@(equipment.CrewType.ToLowerInvariant())">
+                                        @equipment.CrewType
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td>@equipment.EquipmentType</td>
+
+                            <td>@equipment.EquipmentModel</td>
+
+                            <td>
+                                @equipment.TotalEngineHours.ToString("N1")
+                            </td>
+
+                            <td>
+                                @equipment.AssignedDate.ToString("MM/dd/yyyy")
+                            </td>
+
+                            <td>
+
+                                <span class="equipment-status status-@(equipment.EngineStatus.ToLowerInvariant())">
+                                    @equipment.EngineStatus
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                @if (Model.Project.ProjectStatus == "Active")
+                                {
+                                    <div class="equipment-actions">
+
+                                        <a asp-page="./AssignCrew"
+                                           asp-route-id="@equipment.ProjEquipID"
+                                           class="btn-edit">
+                                            Crew
+                                        </a>
+
+                                        <a asp-page="./RemoveEquipment"
+                                           asp-route-id="@equipment.ProjEquipID"
+                                           class="btn-archive">
+                                            Remove
+                                        </a>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="archived-no-action">
+                                        No Actions
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                    @if (!Model.EquipmentList.Any())
+                    {
+                        <tr>
+
+                            <td colspan="8" class="empty-table">
+                                No equipment is currently assigned to this project.
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- PAGE ACTIONS -->
+
+    <div class="project-page-actions">
+
+        <a asp-page="./Index" class="btn-cancel">
+            Back to Projects
+        </a>
+
+        @if (Model.Project.ProjectStatus != "Completed")
+        {
+            <a asp-page="./Edit"
+               asp-route-id="@Model.Project.ProjectID"
+               class="btn-edit">
+                Edit Project
+            </a>
+        }
+
+        @if (Model.Project.ProjectStatus == "Active")
+        {
+            <a asp-page="./Complete"
+               asp-route-id="@Model.Project.ProjectID"
+               class="btn-complete">
+                Complete Project
+            </a>
+        }
+
+    </div>
+
+</div>

@@ -1,0 +1,146 @@
+@page
+@model HeavyEquipmentMonitoring.Pages.Projects.CreateModel
+
+@{
+    ViewData["Title"] = "Create Project";
+}
+
+<div class="equipment-dashboard">
+
+    <section class="dashboard-panel equipment-form">
+
+        <div class="panel-header">
+            <h2>Project Information</h2>
+        </div>
+
+        <div class="form-content">
+
+            <p class="form-description">
+                Enter the construction project information below
+                to create a new project.
+            </p>
+
+            <form method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger">
+                </div>
+
+                <div class="form-grid">
+
+                    <!-- PROJECT NAME -->
+
+                    <div class="form-group">
+
+                        <label asp-for="Input.ProjectName">
+                            Project Name *
+                        </label>
+
+                        <input asp-for="Input.ProjectName"
+                               class="form-control"
+                               placeholder="Enter project name"
+                               maxlength="150"
+                               required />
+
+                        <span asp-validation-for="Input.ProjectName"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <!-- PROJECT STATUS -->
+
+                    <div class="form-group">
+
+                        <label asp-for="Input.ProjectStatus">
+                            Project Status *
+                        </label>
+
+                        <select asp-for="Input.ProjectStatus"
+                                class="form-select"
+                                required>
+
+                            <option value="Upcoming">
+                                Upcoming
+                            </option>
+
+                            <option value="Active">
+                                Active
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="Input.ProjectStatus"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <!-- START DATE -->
+
+                    <div class="form-group">
+
+                        <label asp-for="Input.StartDate">
+                            Start Date *
+                        </label>
+
+                        <input asp-for="Input.StartDate"
+                               type="date"
+                               class="form-control"
+                               required />
+
+                        <span asp-validation-for="Input.StartDate"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <!-- END DATE -->
+
+                    <div class="form-group">
+
+                        <label>End Date</label>
+
+                        <input type="text"
+                               class="form-control"
+                               value="Set when project is completed"
+                               readonly />
+
+                    </div>
+
+                </div>
+
+                <div class="project-notice">
+
+                    <strong>Project Assignments</strong>
+
+                    <p>
+                        Equipment, crew, and employee assignments
+                        can be managed after the project is created.
+                    </p>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button type="submit" class="btn-gold">
+                        Create Project
+                    </button>
+
+                    <a asp-page="./Index" class="btn-cancel">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
