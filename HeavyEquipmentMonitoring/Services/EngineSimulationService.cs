@@ -7,12 +7,14 @@ public class EngineSimulationService : BackgroundService
 {
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<EngineSimulationService> _logger;
+    private readonly SimulationClock _simulationClock;
     private readonly TimeSpan _monitoringInterval = TimeSpan.FromSeconds(10);
     private readonly TimeSpan _telemetryInterval = TimeSpan.FromSeconds(60);
-    public EngineSimulationService(IServiceScopeFactory scopeFactory, ILogger<EngineSimulationService> logger)
+    public EngineSimulationService(IServiceScopeFactory scopeFactory, ILogger<EngineSimulationService> logger, SimulationClock simulationClock)
     {
         _scopeFactory = scopeFactory;
         _logger = logger;
+        _simulationClock = simulationClock;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -173,10 +175,8 @@ public class EngineSimulationService : BackgroundService
         _logger.LogInformation("Engine recovery completed. {Count} machines reset to Off.", equipmentList.Count);
     }
 
-    private static DateTime GetUtcTimestamp()
+    private DateTime GetUtcTimestamp()
     {
-        DateTime now = DateTime.UtcNow;
-
-        return new DateTime(now.Ticks - (now.Ticks % TimeSpan.TicksPerSecond), DateTimeKind.Utc);
+        return _simulationClock.UtcNowSeconds;
     }
 }

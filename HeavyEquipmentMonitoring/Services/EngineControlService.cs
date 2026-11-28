@@ -7,12 +7,12 @@ public class EngineControlService
 {
     private readonly ApplicationDbContext _context;
     private readonly EngineHourService _engineHourService;
-
-    public EngineControlService(ApplicationDbContext context, EngineHourService engineHourService)
+    private readonly SimulationClock _simulationClock;
+    public EngineControlService(ApplicationDbContext context, EngineHourService engineHourService, SimulationClock simulationClock)
     {
         _context = context;
-
         _engineHourService = engineHourService;
+        _simulationClock = simulationClock;
     }
 
     // Start or resume equipment
@@ -100,9 +100,7 @@ public class EngineControlService
 
         // Use whole-second UTC timestamps
 
-        DateTime utcNow = DateTime.UtcNow;
-
-        DateTime now = new DateTime(utcNow.Ticks - (utcNow.Ticks % TimeSpan.TicksPerSecond), DateTimeKind.Utc);
+        DateTime now = GetCurrentSimulationTime();
 
         // Record pending engine hours before changing status
 
@@ -163,4 +161,9 @@ public class EngineControlService
 
         return true;
     }
+    private DateTime GetCurrentSimulationTime()
+    {
+        return _simulationClock.UtcNowSeconds;
+    }
+
 }
